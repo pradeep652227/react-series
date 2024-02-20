@@ -12,26 +12,27 @@ export default function App() {
     else window.alert("You are not allowed to reduce further!!");
   }
 
-  function updateValue(event){
+  function updateValue(event) {
     event.preventDefault();
     console.log(event.target[0].value);
     setValue(event.target[0].value);
   }
 
-  function favColor(event){
+  function favColor(event) {
     event.preventDefault();
     console.log(event.target[0].value);
   }
- 
+let test1=1;
+
   return (
-    <div class="container-1">
+    <div className="container-1">
       <h1>Chai aur react</h1>
       <h2>Counter Value: {value}</h2>
-
+    {test1>0 && <p>Testing</p>}
       <h2>Set Value: </h2>
       <form onSubmit={updateValue}>
-      <input type="number"></input>
-      <button type="submit">Enter</button>
+        <input type="number"></input>
+        <button type="submit">Enter</button>
       </form>
 
       <br />
