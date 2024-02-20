@@ -1,8 +1,3 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Using the Concepts of React Hooks- useState, useCallback, useEffect, and useRef - made this intermediate project. 
+Task- to generate random string and then let the user tweak with it by including/excluding numbers or characters with it. 
+Additional Goal- To let the user copy the string by clicking copy button. 
