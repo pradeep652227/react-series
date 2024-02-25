@@ -36,9 +36,9 @@ function App() {
     setPwd(randStr);
   }
 */
-  useEffect(()=>{
+  useEffect(() => {
     pwdGenerator();
-  },[length,charsAllowed,numbersAllowed]);
+  }, [length, charsAllowed, numbersAllowed]);
 
   const pwdGenerator = useCallback(() => {
     console.log("Pwd Function Called!!");
@@ -49,7 +49,7 @@ function App() {
     let pwdString = str;
     if (numbersAllowed) pwdString += numStr;
 
-    if (charsAllowed) pwdString += charStr;
+    if (charsAllowed) pwdString += charStr; 
 
     let pwdLen = pwdString.length;
     let randStr = "";
@@ -80,11 +80,23 @@ function App() {
     }
   }
   function copyPwdToClipboard() {
-    pwdRef.current?.select();
-    pwdRef.current?.setSelectionRange(0, 100);
-    window.navigator.clipboard.writeText(pwd);
-    window.alert("Password Copied!!");
+    const currentPwdRef=pwdRef.current;
+    if (currentPwdRef) {
+      currentPwdRef.select();
+      currentPwdRef.setSelectionRange(0, 20);
+      const selectedText = currentPwdRef.value.substring(0, 20);
+      window.navigator.clipboard.writeText(selectedText);
+    }
+    else console.log("Undefined or Null pwdRef= "+pwdRef);
+    // window.alert("Password Copied!!");
   }
+  // const copyPwdToClipboard=useCallback(()=>{
+  //   pwdRef.current?.select();
+  //   pwdRef.current?.setSelectionRange(0, 20);
+  //   window.navigator.clipboard.writeText(pwd);
+  //   // window.alert("Password Copied!!");
+  // },[pwd]);
+
   return (
     <div className="text-white p-4 bg-gray-800 rounded-xl">
       <h1 className="mb-2">Password Generator</h1>
@@ -98,7 +110,6 @@ function App() {
             value={pwd}
             placeholder="Enter Password"
             onChange={handleChange}
-            onClick={pwdGenerator}
             ref={pwdRef}
           />
           <button
