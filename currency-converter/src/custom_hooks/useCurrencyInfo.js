@@ -15,4 +15,4 @@ function useCurrencyInfo(currency) {
   return data;
 }
 
-export {useCurrencyInfo};
+export { useCurrencyInfo };

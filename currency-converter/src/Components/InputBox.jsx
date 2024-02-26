@@ -13,11 +13,9 @@ export default function InputBox(props) {
   const toCurr = props.objectProps.toCurr;
   const setFromCurr = props.objectProps.setFromCurr;
   const setToCurr = props.objectProps.setToCurr;
-  const triggeredBy = props.objectProps.triggeredBy;
-  const setTrigerredBy = props.objectProps.setTrigerredBy;
-  const swap = props.objectProps.swap;
   const setConvertedAmount = props.objectProps.setConvertedAmount;
 
+  const [outlineChange,setOutlineChange]=useState(false);
   const [currency, setCurrency] = useState("usd");
   let data = useCurrencyInfo(currency); //an object of currency containing other currencies and corresponding conversion values.
   let currencies = useCurrencyInfo("usd");
@@ -28,11 +26,11 @@ export default function InputBox(props) {
     if (labelName === "From") {
       console.log("From-Curr-Func");
       setCurrency(inputVal); //new currency value is updated
-      setTrigerredBy("from-input");
+      // setTrigerredBy("from-input");
       setFromCurr(inputVal);
     } else {
       console.log("To-Curr-Func");
-      setTrigerredBy("to-input");
+      // setTrigerredBy("to-input");
       setToCurr(inputVal);
     }
   }
@@ -73,54 +71,66 @@ export default function InputBox(props) {
     }
   }, [fromCurr, toCurr, data]);
 
+  let input_select_style = { height: "2em", outline: "0" };
   return (
-    <div className="input-box">
-      <label className="block">{labelName}</label>
-      <input
-        type="number"
-        className="py-1"
-        value={labelName === "From" ? fromInputVal : toInputVal}
-        name={props.inputName}
-        onChange={handleInput}
-      />
-      {/* {labelName === "From" ? (
-        <input
-          type="number"
-          className="py-1"
-          value={fromInputVal}
-          name={props.inputName}
-          onChange={handleInput}
-        />
-      ) : (
-        <input
-          type="number"
-          className="py-1"
-          value={toInputVal}
-          name={props.inputName}
-          onChange={handleInput}
-        />
-      )} */}
-      <select
-        className="py-1"
-        onChange={handleChange}
-        value={labelName === "From" ? fromCurr : toCurr}
+    <div className="input-box" style={{fontSize:"1.2em"}}>
+      <label className="block" >{labelName}</label>
+      <div
+        id="input_select_box"
+        style={{ border: "1px solid white" }}
+        className={outlineChange ? "outlineClass" : "removeOutline"}
+        onClick={()=>setOutlineChange(!outlineChange)}
       >
-        {currencies.map((currency, idx) => {
-          {
-            /* if (
-            (labelName === "From" && currency === fromCurr) ||
-            (labelName === "To" && currency === toCurr)
-          )
-            return (
-              <option key={idx} selected>
-                {currency}
-              </option>
-            );
-          else  */
-          }
-          return <option key={idx}>{currency}</option>;
-        })}
-      </select>
+        <input
+          type="number"
+          className="py-1"
+          value={labelName === "From" ? fromInputVal : toInputVal}
+          name={props.inputName}
+          onChange={handleInput}
+          // onClick={(e)=>e.stopPropagation()}
+          style={input_select_style}
+        />
+        <select
+          className="py-1"
+          onChange={handleChange}
+          value={labelName === "From" ? fromCurr : toCurr}
+          style={input_select_style}
+          // onClick={(e)=>e.stopPropagation()}
+        >
+          {currencies.map((currency, idx) => {
+            return <option key={idx}>{currency}</option>;
+          })}
+        </select>
+      </div>
     </div>
   );
+  //MAs
+  // {labelName === "From" ? (
+  //   <input
+  //     type="number"
+  //     className="py-1"
+  //     value={fromInputVal}
+  //     name={props.inputName}
+  //     onChange={handleInput}
+  //   />
+  // ) : (
+  //   <input
+  //     type="number"
+  //     className="py-1"
+  //     value={toInputVal}
+  //     name={props.inputName}
+  //     onChange={handleInput}
+  //   />
+  // )}
+
+  /* if (
+    (labelName === "From" && currency === fromCurr) ||
+    (labelName === "To" && currency === toCurr)
+  )
+    return (
+      <option key={idx} selected>
+        {currency}
+      </option>
+    );
+  else  */
 }
