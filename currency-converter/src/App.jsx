@@ -1,7 +1,7 @@
 import "./App.css";
 import InputBox from "./Components/InputBox";
 import Button from "./Components/Button";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function App() {
   const [fromCurr, setFromCurr] = useState("usd");
@@ -12,6 +12,8 @@ export default function App() {
   const [convertedAmount, setConvertedAmount] = useState(0);
 
   const [swap, setSwap] = useState(true);
+  const creditsRef = useRef(null);
+  const creditsBtnRef = useRef(null);
 
   const objectProps = {
     setFromCurr: setFromCurr,
@@ -27,13 +29,44 @@ export default function App() {
     setConvertedAmount: setConvertedAmount,
     swap: swap,
   };
-
   function handleBtnsClick(e) {
-    window.open(
-      e.target.name === "credits_btn"
-        ? "https://www.youtube.com/@chaiaurcode/featured"
-        : "https://github.com/pradeep652227/react-series/tree/main/currency-converter"
-    );
+    let btnName = e.target.name;
+    if (btnName === "credits_btn") {
+      e.target.classList.add("slide-right");
+      e.target.classList.remove("rounded-bl-none");
+      e.target.classList.remove("rounded-tl-none");
+      setTimeout(() => {//execute this code after 0.5s
+        e.target.classList.add("hidden");
+        creditsRef.current?.classList.remove("hidden");
+      }, 500);
+    } else if (btnName === "collapse_btn") {
+      creditsRef.current?.classList.add("hidden");
+      creditsBtnRef.current?.classList.remove("hidden");
+
+      setTimeout(() => {
+        creditsBtnRef.current?.classList.remove("slide-right");
+        creditsBtnRef.current?.classList.add("slide-left");
+        setTimeout(() => {
+          creditsBtnRef.current?.classList.remove("slide-left");
+          creditsBtnRef.current?.classList.add("transi");
+          creditsBtnRef.current?.classList.add("rounded-bl-none");
+          creditsBtnRef.current?.classList.add("rounded-tl-none");
+        }, 500);
+      }, 500);
+    }else{
+      window.open("https://github.com/pradeep652227/react-series/tree/main/currency-converter");
+    }
+  }
+
+  let credits_style = {
+    maxWidth: "200px",
+    height: "fit-content",
+    position: "absolute",
+    left: "0px",
+  };
+  let collapse_btn_style={
+    position:"relative",
+    left:"20%",
   }
   // let background_img_add="https://c0.wallpaperflare.com/path/370/489/251/india-udaipur-lake-pichola-rajasthan-9e4224ba704c7565d0623a0abdb94a83.jpg";
   let background_img_add =
@@ -50,21 +83,20 @@ export default function App() {
     top: "0",
     left: "0",
   };
-  let credits_style = {
-    position: "fixed",
-    bottom: "0",
-    left: "0",
-    fontSize: "0.8em",
+  let credits_btn_style = {
+    opacity: "1",
+    position: "absolute",
+    left: "0px",
   };
   let link_btn_style = {
     position: "fixed",
-    bottom: "0",
+    top: "0",
     right: "0",
-    fontSize: "0.8em",
   };
+
   return (
     <div
-      className="main-body h-screen flex items-center justify-center"
+      className="relative main-body h-screen flex items-center justify-center"
       style={body_div_style}
     >
       <img
@@ -100,23 +132,51 @@ export default function App() {
           fromCurr={fromCurr}
           toCurr={toCurr}
         />
+      </div>
+      <button
+        style={credits_btn_style}
+        className="absolute rounded-full rounded-tl-none rounded-bl-none bg-zinc-300 text-md px-2 self-center"
+        name="credits_btn"
+        onClick={handleBtnsClick}
+        ref={creditsBtnRef}
+      >
+        Credits
+      </button>
+      {/* Credits Box- show/hide */}
+      <div
+        id="credits"
+        ref={creditsRef}
+        className="hidden box bg-gray-400 p-2 self-center"
+        style={credits_style}
+      >
+        <a href="https://www.youtube.com/@chaiaurcode/featured" target="_blank" rel="noopener noreffer">
+          <span className="text-md d-block">
+            Chai Aur Code by Hitesh Choudhary Sir
+          </span>
+          <img
+src="https://yt3.googleusercontent.com/1FEdfq3XpKE9UrkT4eOc5wLF2Bz-42sskTi0RkK4nPh4WqCbVmmrDZ5SVEV3WyvPdkfR8sw2=s176-c-k-c0x00ffffff-no-rj"            id="credits_img"
+            className="rounded-xl shadow-2xl "
+          />
+        </a>
         <button
-          style={credits_style}
-          className="rounded-full bg-zinc-300 text-00 px-2"
-          name="credits_btn"
+          id="collapse-credits"
+          className="bg-gray-400 rounded-xl px-2 hover:bg-gray-50 duration-200"
+          style={collapse_btn_style}
+          name="collapse_btn"
           onClick={handleBtnsClick}
         >
-          Credits- Chai Aur Code by Hitesh Choudhary Sir
-        </button>
-        <button
-          style={link_btn_style}
-          className="rounded-full bg-zinc-300 text-00 px-2"
-          name="link_btn"
-          onClick={handleBtnsClick}
-        >
-          Link To Code
+          Collapse
         </button>
       </div>
+      {/* Credits Box- hide/show */}
+      <button
+        style={link_btn_style}
+        className="rounded-full rounded-tr-none rounded-br-none bg-zinc-300 text-md px-2"
+        name="link_btn"
+        onClick={handleBtnsClick}
+      >
+        Link To Code
+      </button>
     </div>
   );
 }

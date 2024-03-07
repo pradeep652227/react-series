@@ -12,7 +12,7 @@ export default function Button(props) {
   if (props.type === "swap") {
     btn_style["padding"] = "10px 40px";
     btn_style["margin"] = "0 0 -1.4em 0";
-    btn_style["z-index"] = "1";
+    btn_style["zIndex"] = "1";
   }
 
   return (
