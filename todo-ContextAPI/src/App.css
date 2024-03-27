@@ -1,0 +1,12 @@
+.list_item::placeholder {
+    color: rgb(255 255 255 / 59%);
+    opacity: 1;
+}
+
+body{
+    font-family: "Montserrat", sans-serif;
+}
+
+.todo_item,.todo_form{
+     font-family: "Comfortaa", sans-serif;
+}
