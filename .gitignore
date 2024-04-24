@@ -1,1 +1,4 @@
 .node_modules
+.Complete*Blog*App/
+.MegaProjectBlog/
+.env
